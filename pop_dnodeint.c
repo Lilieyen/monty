@@ -1,42 +1,30 @@
-#include "lists.h"
-
+#include "monty.h"
 /**
- * delete_dnodeint_at_index - Deletes a node from a dlistint_t
- *                            at a given index.
- * @head: A pointer to the head of the dlistint_t.
- * @index: The index of the node to delete.
- *
- * Return: Upon success - 1.
- *         Otherwise - -1.
+ *last_delete - delete node at the end
+ *Return: void
  */
-int delete_dnodeint_at_index(dlistint_t **head, unsigned int index)
+
+void last_delete(void)
 {
-	dlistint_t *tmp = *head;
+	struct node *ptr;
 
-	if (*head == NULL)
-		return (-1);
-
-	for (; index != 0; index--)
+	if (head == NULL)
 	{
-		if (tmp == NULL)
-			return (-1);
-		tmp = tmp->next;
+		printf("\n can't pop an empty stack\n");
 	}
-
-	if (tmp == *head)
+	else if (head->next == NULL)
 	{
-		*head = tmp->next;
-		if (*head != NULL)
-			(*head)->prev = NULL;
+		head = NULL;
+		free(head);
 	}
-
 	else
 	{
-		tmp->prev->next = tmp->next;
-		if (tmp->next != NULL)
-			tmp->next->prev = tmp->prev;
+		ptr = head;
+		if (ptr->next != NULL)
+		{
+			ptr = ptr->next;
+		}
+		ptr->prev->next = NULL;
+		free(ptr);
 	}
-
-	free(tmp);
-	return (1);
 }
